@@ -88,7 +88,7 @@ nv.render = function render(step) {
     step = step || 1;
 
     nv.render.active = true;
-    nv.dispatch.render_start();
+    nv.dispatch.call('render_start');
 
     var renderLoop = function() {
         var chart, graph;
@@ -104,7 +104,7 @@ nv.render = function render(step) {
             setTimeout(renderLoop);
         }
         else {
-            nv.dispatch.render_end();
+            nv.dispatch.call('render_end');
             nv.render.active = false;
         }
     };

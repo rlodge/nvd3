@@ -24,8 +24,8 @@ nv.models.forceDirectedGraph = function() {
         // These functions allow to add extra attributes to ndes and links
         ,nodeExtras = function(nodes) { /* Do nothing */ }
         ,linkExtras = function(links) { /* Do nothing */ }
-        , getX=d3.functor(0.0)
-        , getY=d3.functor(0.0)
+        , getX=nv.functor(0.0)
+        , getY=nv.functor(0.0)
         ;
 
 
@@ -162,8 +162,8 @@ nv.models.forceDirectedGraph = function() {
         radius:      {get: function(){return radius;}, set: function(_){radius=_;}},
 
         //functor options
-        x: {get: function(){return getX;}, set: function(_){getX=d3.functor(_);}},
-        y: {get: function(){return getY;}, set: function(_){getY=d3.functor(_);}},
+        x: {get: function(){return getX;}, set: function(_){getX=nv.functor(_);}},
+        y: {get: function(){return getY;}, set: function(_){getY=nv.functor(_);}},
 
         // options that require extra logic in the setter
         margin: {get: function(){return margin;}, set: function(_){

@@ -17,8 +17,8 @@ nv.models.heatMap = function() {
         , height = 500
         , id = Math.floor(Math.random() * 10000) //Create semi-unique ID in case user doesn't select one
         , container
-        , xScale = d3.scale.ordinal()
-        , yScale = d3.scale.ordinal()
+        , xScale = d3.scaleOrdinal()
+        , yScale = d3.scaleOrdinal()
         , colorScale = false
         , getX = function(d) { return d.x }
         , getY = function(d) { return d.y }
@@ -418,7 +418,7 @@ nv.models.heatMap = function() {
                   .rangeBands(xRange || [0, availableWidth-cellBorderWidth/2]);
             yScale.domain(yDomain || sortObjByVals(uniqueY))
                   .rangeBands(yRange || [0, availableHeight-cellBorderWidth/2]);
-            colorScale = cellsAreNumeric() ? d3.scale.quantize() : d3.scale.ordinal();
+            colorScale = cellsAreNumeric() ? d3.scale.quantize() : d3.scaleOrdinal();
             colorScale.domain(colorDomain || getColorDomain())
                   .range(colorRange || RdYlBu);
 

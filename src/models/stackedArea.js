@@ -274,11 +274,11 @@ nv.models.stackedArea = function() {
         interpolate:    {get: function(){return interpolate;}, set: function(_){interpolate=_;}},
 
         // simple functor options
-        x:     {get: function(){return getX;}, set: function(_){getX = d3.functor(_);}},
-        y:     {get: function(){return getY;}, set: function(_){getY = d3.functor(_);}},
+        x:     {get: function(){return getX;}, set: function(_){getX = nv.functor(_);}},
+        y:     {get: function(){return getY;}, set: function(_){getY = nv.functor(_);}},
 
-        areaY1:     {get: function(){return areaY1;}, set: function(_){ areaY1 = d3.functor(_);}},
-        transformData:     {get: function(){return transformData;}, set: function(_){ transformData = d3.functor(_);}},
+        areaY1:     {get: function(){return areaY1;}, set: function(_){ areaY1 = nv.functor(_);}},
+        transformData:     {get: function(){return transformData;}, set: function(_){ transformData = nv.functor(_);}},
 
         // options that require extra logic in the setter
         margin: {get: function(){return margin;}, set: function(_){
