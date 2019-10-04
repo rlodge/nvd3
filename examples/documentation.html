@@ -587,17 +587,17 @@ as well as used to print out examples using those example inputs.
         xScale: {
             desc: "Override the default scale type for the X axis",
             refs: ["https://github.com/mbostock/d3/wiki/Quantitative-Scales#linear"],
-            default: "d3.scale.linear()"
+            default: "d3.scaleLinear()"
         },
         yScale: {
             desc: "Override the default scale type for the Y axis",
             refs: ["https://github.com/mbostock/d3/wiki/Quantitative-Scales#linear"],
-            default: "d3.scale.linear()"
+            default: "d3.scaleLinear()"
         },
         pointScale: {
             desc: "Override the default scale type for the shapes used in the scatter plot. Scatter is also used to make the hover points on lines.",
             refs: ["https://github.com/mbostock/d3/wiki/Quantitative-Scales#linear"],
-            default: "d3.scale.linear()"
+            default: "d3.scaleLinear()"
         },
         pointSize: {
             desc: "Specifies the size of the points in a scatter.  Scatter is also used to make the hover points on lines.",
@@ -1110,7 +1110,7 @@ as well as used to print out examples using those example inputs.
             desc: "Set the color domain for cells; will otherwise be set automatically as either the cell value extend [if the cell values are numeric] or all cell values [if the cell values are categorical]",
         },
         colorScale: {
-            desc: "Override the default scale type for cell colors; will otherwise be set automatically as either d3.scale.quantize() [if cell values are numeric] or d3.scale.ordinal() [if cell values are categorical]",
+            desc: "Override the default scale type for cell colors; will otherwise be set automatically as either d3.scale.quantize() [if cell values are numeric] or d3.scaleOrdinal() [if cell values are categorical]",
         },
         highContrastText: {
             desc: "Automatically set the cell label color in such a way to maximize contrast against the background color.",

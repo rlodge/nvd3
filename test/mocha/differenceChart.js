@@ -732,7 +732,7 @@
 
       describe('areaY1', function () {
         it('should use the scatter yScale to calculate the value using d.display.y', function () {
-          var fakeYScale = sandbox.spy(d3.scale.linear());
+          var fakeYScale = sandbox.spy(d3.scaleLinear());
           builder.model.multiChart.stack1.scatter.yScale(fakeYScale);
           builder.model.update();
 

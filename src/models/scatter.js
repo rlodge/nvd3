@@ -685,10 +685,10 @@ nv.models.scatter = function() {
         pointBorderColor: {get: function(){return pointBorderColor;}, set: function(_){pointBorderColor=_;}},
 
         // simple functor options
-        x:     {get: function(){return getX;}, set: function(_){getX = d3.functor(_);}},
-        y:     {get: function(){return getY;}, set: function(_){getY = d3.functor(_);}},
-        pointSize: {get: function(){return getSize;}, set: function(_){getSize = d3.functor(_);}},
-        pointShape: {get: function(){return getShape;}, set: function(_){getShape = d3.functor(_);}},
+        x:     {get: function(){return getX;}, set: function(_){getX = nv.functor(_);}},
+        y:     {get: function(){return getY;}, set: function(_){getY = nv.functor(_);}},
+        pointSize: {get: function(){return getSize;}, set: function(_){getSize = nv.functor(_);}},
+        pointShape: {get: function(){return getShape;}, set: function(_){getShape = nv.functor(_);}},
 
         // options that require extra logic in the setter
         margin: {get: function(){return margin;}, set: function(_){

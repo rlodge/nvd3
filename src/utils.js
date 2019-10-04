@@ -87,7 +87,8 @@ nv.utils.getColor = function(color) {
 
     //if passed an array, turn it into a color scale
     } else if(nv.utils.isArray(color)) {
-        var color_scale = d3.scalePoint().range(color);
+        // var color_scale = d3.scaleOrdinal().range(color);
+        var color_scale = d3.scaleOrdinal().range(color);
         return function(d, i) {
             var key = i === undefined ? d : i;
             return d.color || color_scale(key);
@@ -108,7 +109,7 @@ Default color chooser uses a color scale of 20 colors from D3
  */
 nv.utils.defaultColor = function() {
     // get range of the scale so we'll turn it into our own function.
-    return nv.utils.getColor(d3.scaleOrdinal(d3.schemeCategory20).range());
+    return nv.utils.getColor(d3.schemeCategory10);
 };
 
 
@@ -119,7 +120,7 @@ looks for a corresponding color from the dictionary
 nv.utils.customTheme = function(dictionary, getKey, defaultColors) {
     // use default series.key if getKey is undefined
     getKey = getKey || function(series) { return series.key };
-    defaultColors = defaultColors || d3.scale.category20().range();
+    defaultColors = defaultColors || d3.scaleOrdinal().range(d3.schemeCategory10);
 
     // start at end of default color list and walk back to index 0
     var defIndex = defaultColors.length;
@@ -272,7 +273,7 @@ nv.utils.renderWatch = function(dispatch, duration) {
         } else {
             if (selection.length === 0) {
                 selection.__rendered = true;
-            } else if (selection.filter( function(d){ return !d.length; } )) {
+            } else if (selection.every( function(d){ return !d.length; } )) {
                 selection.__rendered = true;
             } else {
                 selection.__rendered = false;
@@ -283,7 +284,7 @@ nv.utils.renderWatch = function(dispatch, duration) {
                 .transition()
                 .duration(duration)
                 .each(function(){ ++n; })
-                .on('end', function(d, i) {
+                .each('end', function(d, i) {
                     if (--n === 0) {
                         selection.__rendered = true;
                         self.renderEnd.apply(this, args);
@@ -295,7 +296,7 @@ nv.utils.renderWatch = function(dispatch, duration) {
     this.renderEnd = function() {
         if (renderStack.every( function(d){ return d.__rendered; } )) {
             renderStack.forEach( function(d){ d.__rendered = false; });
-            dispatch.apply("renderEnd", this, arguments);
+            dispatch.renderEnd.apply(this, arguments);
         }
     }
 
@@ -527,7 +528,7 @@ nv.utils.initOptions = function(chart) {
 
 /*
 Inherit options from a D3 object
-d3.rebind makes calling the function on target actually call it on source
+nv.rebind makes calling the function on target actually call it on source
 Also use _d3options so we can track what we inherit for documentation and chained inheritance
 */
 nv.utils.inheritOptionsD3 = function(target, d3_source, oplist) {
@@ -536,7 +537,7 @@ nv.utils.inheritOptionsD3 = function(target, d3_source, oplist) {
     target._d3options = (target._d3options || []).filter(function(item, i, ar){ return ar.indexOf(item) === i; });
     oplist.unshift(d3_source);
     oplist.unshift(target);
-    d3.rebind.apply(this, oplist);
+    nv.rebind.apply(this, oplist);
 };
 
 
@@ -557,6 +558,28 @@ Add new symbols by doing nv.utils.symbols.set('name', function(size){...});
 */
 nv.utils.symbolMap = d3.map();
 
+function d3_functor(v) {
+    return typeof v === "function" ? v : function() { return v; };
+}
+
+nv.functor = d3_functor;
+
+// Copies a variable number of methods from source to target.
+nv.rebind = function(target, source) {
+    var i = 1, n = arguments.length, method;
+    while (++i < n) target[method = arguments[i]] = d3_rebind(target, source, source[method]);
+    return target;
+  };
+  
+  // Method is assumed to be a standard D3 getter-setter:
+  // If passed with no arguments, gets the value.
+  // If passed with arguments, sets the value and returns the target.
+  function d3_rebind(target, source, method) {
+    return function() {
+      var value = method.apply(source, arguments);
+      return value === source ? target : value;
+    };
+  }
 
 /*
 Replaces d3.svg.symbol so that we can look both there and our own map
@@ -567,22 +590,20 @@ nv.utils.symbol = function() {
     function symbol(d,i) {
         var t = type.call(this,d,i);
         var s = size.call(this,d,i);
-        // TODO: Not sure if symbol('circle') would return a d3.symbolCircle. In v4 symbols are enums and not strings
-
-        if (nv.utils.symbolMap.get(t) === undefined) {
-            return d3.symbol(t)(s);
+        if (d3.svg.symbolTypes.indexOf(t) !== -1) {
+            return d3.svg.symbol().type(t).size(s)();
         } else {
             return nv.utils.symbolMap.get(t)(s);
         }
     }
     symbol.type = function(_) {
         if (!arguments.length) return type;
-        type = d3.functor(_);
+        type = nv.functor(_);
         return symbol;
     };
     symbol.size = function(_) {
         if (!arguments.length) return size;
-        size = d3.functor(_);
+        size = nv.functor(_);
         return symbol;
     };
     return symbol;
@@ -591,7 +612,7 @@ nv.utils.symbol = function() {
 
 /*
 Inherit option getter/setter functions from source to target
-d3.rebind makes calling the function on target actually call it on source
+nv.rebind makes calling the function on target actually call it on source
 Also track via _inherited and _d3options so we can track what we inherit
 for documentation generation purposes and chained inheritance
 */
@@ -604,7 +625,7 @@ nv.utils.inheritOptions = function(target, source) {
     var args = ops.concat(calls).concat(inherited).concat(d3ops);
     args.unshift(source);
     args.unshift(target);
-    d3.rebind.apply(this, args);
+    nv.rebind.apply(this, args);
     // pass along the lists to keep track of them, don't allow duplicates
     target._inherited = nv.utils.arrayUnique(ops.concat(calls).concat(inherited).concat(ops).concat(target._inherited || []));
     target._d3options = nv.utils.arrayUnique(d3ops.concat(target._d3options || []));
@@ -615,7 +636,7 @@ nv.utils.inheritOptions = function(target, source) {
 Runs common initialize code on the svg before the chart builds
 */
 nv.utils.initSVG = function(svg) {
-    svg.classed('nvd3-svg', true);
+    svg.classed({'nvd3-svg':true});
 };
 
 

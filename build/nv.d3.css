@@ -1,4 +1,4 @@
-/* nvd3 version 1.8.6-dev (https://github.com/novus/nvd3) 2019-10-04 */
+/* nvd3 version 1.8.6-dev (https://github.com/novus/nvd3) 2018-10-12 */
 .nvd3 .nv-axis {
     pointer-events:none;
     opacity: 1;
@@ -47,8 +47,6 @@
 .nvd3 .nv-bars rect {
     fill-opacity: .75;
 
-    -webkit-transition: fill-opacity 250ms linear;
-
     transition: fill-opacity 250ms linear;
 }
 
@@ -72,8 +70,6 @@
 .nvd3 .nv-multibarHorizontal .nv-groups rect,
 .nvd3 .nv-discretebar .nv-groups rect {
     stroke-opacity: 0;
-
-    -webkit-transition: fill-opacity 250ms linear;
 
     transition: fill-opacity 250ms linear;
 }
@@ -154,7 +150,6 @@
 }
 
 .with-transitions .nv-candlestickBar .nv-ticks .nv-tick {
-    -webkit-transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
     transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
 }
 
@@ -227,7 +222,6 @@
 
 
 .with-transitions .nvd3 .nv-groups .nv-point {
-    -webkit-transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
     transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
 }
 
@@ -272,8 +266,7 @@ svg.nvd3-svg {
   Box shadow and border radius styling
 */
 .nvtooltip.with-3d-shadow, .with-3d-shadow .nvtooltip {
-    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-            box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
     border-radius: 5px;
 }
 
@@ -399,7 +392,6 @@ svg.nvd3-svg {
 
 .nvd3.nv-pie path {
     stroke-opacity: 0;
-    -webkit-transition: fill-opacity 250ms linear, stroke-width 250ms linear, stroke-opacity 250ms linear;
     transition: fill-opacity 250ms linear, stroke-width 250ms linear, stroke-opacity 250ms linear;
 }
 
@@ -507,7 +499,6 @@ svg.nvd3-svg {
 .nvd3.nv-stackedarea path.nv-area {
     fill-opacity: .7;
     stroke-opacity: 0;
-    -webkit-transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;
     transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;
 }
 
@@ -556,12 +547,9 @@ svg.nvd3-svg {
     putting a "with-transitions" class on the container div.
 */
 .nvtooltip.with-transitions, .with-transitions .nvtooltip {
-    -webkit-transition: opacity 50ms linear;
     transition: opacity 50ms linear;
 
-    -webkit-transition-delay: 200ms;
-
-            transition-delay: 200ms;
+    transition-delay: 200ms;
 }
 
 .nvtooltip.x-nvtooltip,

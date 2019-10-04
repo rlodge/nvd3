@@ -16,8 +16,8 @@ nv.models.distroPlot = function() {
         width = 960,
         height = 500,
         id = Math.floor(Math.random() * 10000), // Create semi-unique ID in case user doesn't select one
-        xScale = d3.scale.ordinal(),
-        yScale = d3.scale.linear(),
+        xScale = d3.scaleOrdinal(),
+        yScale = d3.scaleLinear(),
         getX  = function(d) { return d.label }, // Default data model selectors.
         getY  = function(d) { return d.value },
         getColor = function(d) { return d.color },
@@ -245,7 +245,7 @@ nv.models.distroPlot = function() {
 
 
             // make a new vertical scale for each group
-            var tmpScale = d3.scale.linear()
+            var tmpScale = d3.scaleLinear()
                 .domain([0, d3.max(kdeDat, function (e) { return e.y;})])
                 .clamp(true);
             yVScale.push(tmpScale);
