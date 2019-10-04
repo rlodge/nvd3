@@ -1,4 +1,4 @@
-/* nvd3 version 1.8.6-dev (https://github.com/novus/nvd3) 2018-07-01 */
+/* nvd3 version 1.8.6-dev (https://github.com/novus/nvd3) 2019-10-04 */
 (function(){
 
 // set up main nv object
@@ -17436,7 +17436,7 @@ nv.models.stackedArea = function() {
                     chart.offset('wiggle');
                     chart.order('inside-out');
                     break;
-                case 'stream-center':
+                case 'stream_center':
                     chart.offset('silhouette');
                     chart.order('inside-out');
                     break;
@@ -17675,7 +17675,7 @@ nv.models.stackedAreaChart = function() {
                         key: controlLabels.stream_center || 'Stream Center',
                         metaKey: 'Stream_Center',
                         disabled: stacked.style() != 'stream_center',
-                        style: 'stream-center'
+                        style: 'stream_center'
                     },
                     {
                         key: controlLabels.expanded || 'Expanded',
